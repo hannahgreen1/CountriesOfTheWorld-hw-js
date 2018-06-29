@@ -137,7 +137,7 @@ eval("const Request = __webpack_require__(/*! ../helpers/request.js */ \"./src/h
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst ListView = __webpack_require__(/*! ./list_view.js */ \"./src/views/list_view.js\");\n\nconst CountryView = function (container) {\n  this.container = container;\n};\n\n\nmodule.exports = CountryView;\n\n\n//# sourceURL=webpack:///./src/views/country_view.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst ListView = __webpack_require__(/*! ./list_view.js */ \"./src/views/list_view.js\");\n\nconst CountryView = function (container) {\n  this.container = container;\n};\nCountryView.prototype.bindEvents = function () {\n  PubSub.subscribe('Countries:selected-country-ready', (evt) => {\n    this.clearCountry();\n    this.render(evt.detail);\n  });\n};\n\nCountryView.prototype.render = function (country) {\n  const countryName = this.createElement('h2', country.name);\n  this.container.appendChild(countryName);\n\n  const regionTitle = this.createElement('h3', 'Region:');\n  this.container.appendChild(regionTitle);\n\n  const countryRegion = this.createElement('p', country.region);\n  this.container.appendChild(countryRegion);\n\n  const countryLanguagesListView = new ListView(this.container);\n  countryLanguagesListView.render('Languages', country.languages, 'name');\n\n  const countryBorderingCountriesListView = new ListView(this.container);\n  countryBorderingCountriesListView.render('Bordering Countries', country.borderingCountries, 'name');\n\n  const countryPopulationListView = new ListView(this.container);\n  \n};\n\nCountryView.prototype.createElement = function (elementType, text) {\n  const element = document.createElement(elementType);\n  element.textContent = text;\n  return element;\n};\n\nCountryView.prototype.clearCountry = function () {\n  this.container.innerHTML = '';\n};\n\nmodule.exports = CountryView;\n\n\n//# sourceURL=webpack:///./src/views/country_view.js?");
 
 /***/ }),
 
@@ -148,7 +148,7 @@ eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/he
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst ListView = function (container) {\n  this.container = container;\n};\n\n\nmodule.exports = ListView;\n\n\n//# sourceURL=webpack:///./src/views/list_view.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst ListView = function (container) {\n  this.container = container;\n};\n\n\n\nmodule.exports = ListView;\n\n\n//# sourceURL=webpack:///./src/views/list_view.js?");
 
 /***/ }),
 
@@ -159,7 +159,7 @@ eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/he
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst SelectView = function (selectElement) {\n  this.element = selectElement;\n};\n\n\nmodule.exports = SelectView;\n\n\n//# sourceURL=webpack:///./src/views/select_view.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst SelectView = function (selectElement) {\n  this.element = selectElement;\n};\n\n\n\nmodule.exports = SelectView;\n\n\n//# sourceURL=webpack:///./src/views/select_view.js?");
 
 /***/ })
 
