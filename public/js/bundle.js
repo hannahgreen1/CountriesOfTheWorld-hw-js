@@ -159,7 +159,7 @@ eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/he
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst SelectView = function (selectElement) {\n  this.element = selectElement;\n};\n\n\n\nmodule.exports = SelectView;\n\n\n//# sourceURL=webpack:///./src/views/select_view.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst SelectView = function (selectElement) {\n  this.element = selectElement;\n};\n\nSelectView.prototype.bindEvents = function () {\n  PubSub.subscribe('Countries:countries-data-ready', (evt) => {\n    this.populate(evt.detail)\n  });\n\n  this.element.addEventListener('change', (evt) => {\n    const selectedIndex = evt.target.value;\n    PubSub.publish('SelectView:change', selectedIndex);\n  })\n};\n\nSelectView.prototype.populate = function (countries) {\n  countries.forEach((country, index) => {\n    const countryOption = this.createOption(country.name, index);\n    this.element.appendChild(countryOption);\n  });\n};\n\nSelectView.prototype.createOption = function (name, index) {\n  const option = document.createElement('option');\n  option.textContent = name;\n  option.value = index;\n  return option;\n};\n\nmodule.exports = SelectView;\n\n\n//# sourceURL=webpack:///./src/views/select_view.js?");
 
 /***/ })
 
