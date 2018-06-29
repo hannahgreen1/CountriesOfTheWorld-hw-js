@@ -34,6 +34,9 @@ CountryView.prototype.render = function (country) {
   const countryBorderingCountriesListView = new ListView(this.container);
   countryBorderingCountriesListView.render('Bordering Countries', country.borderingCountries, 'name');
 
+  const countryPopulationTitle = this.createElement('h3', 'Country Population:');
+  this.container.appendChild(countryPopulationTitle);
+
   const countryPopulation = this.createElement('p', country.population);
   this.container.appendChild(countryPopulation);
 
