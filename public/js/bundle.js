@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("throw new Error(\"Module parse failed: Unexpected token (3:2)\\nYou may need an appropriate loader to handle this file type.\\n| document.addEventListener('DOMContentLoaded', () => {\\n|   \\n> }):\\n| \");\n\n//# sourceURL=webpack:///./src/app.js?");
+eval("document.addEventListener('DOMContentLoaded', () => {\n  console.log(DOMContentLoaded);\n});\n\n\n//# sourceURL=webpack:///./src/app.js?");
 
 /***/ })
 
