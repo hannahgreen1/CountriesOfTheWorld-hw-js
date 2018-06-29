@@ -4,7 +4,6 @@ const CountryView = require('./views/country_view.js');
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log(DOMContentLoaded);
 
   const selectElement = document.querySelector('select#countries');
   const selectView = new SelectView(selectElement);

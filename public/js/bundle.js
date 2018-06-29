@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const Countries = __webpack_require__(/*! ./models/countries.js */ \"./src/models/countries.js\");\nconst SelectView = __webpack_require__(/*! ./views/select_view.js */ \"./src/views/select_view.js\");\nconst CountryView = __webpack_require__(/*! ./views/country_view.js */ \"./src/views/country_view.js\");\n\n\ndocument.addEventListener('DOMContentLoaded', () => {\n  console.log(DOMContentLoaded);\n\n  const selectElement = document.querySelector('select#countries');\n  const selectView = new SelectView(selectElement);\n  selectView.bindEvents();\n\n  const countryContainer = document.querySelector('#country');\n  const countryView = new CountryView(countryContainer);\n  countryView.bindEvents();\n\n  const countries = new Countries('https://restcountries.eu/rest/v2/all');\n  countries.bindEvents();\n  countries.getData();\n});\n\n\n//# sourceURL=webpack:///./src/app.js?");
+eval("const Countries = __webpack_require__(/*! ./models/countries.js */ \"./src/models/countries.js\");\nconst SelectView = __webpack_require__(/*! ./views/select_view.js */ \"./src/views/select_view.js\");\nconst CountryView = __webpack_require__(/*! ./views/country_view.js */ \"./src/views/country_view.js\");\n\n\ndocument.addEventListener('DOMContentLoaded', () => {\n\n  const selectElement = document.querySelector('select#countries');\n  const selectView = new SelectView(selectElement);\n  selectView.bindEvents();\n\n  const countryContainer = document.querySelector('#country');\n  const countryView = new CountryView(countryContainer);\n  countryView.bindEvents();\n\n  const countries = new Countries('https://restcountries.eu/rest/v2/all');\n  countries.bindEvents();\n  countries.getData();\n});\n\n\n//# sourceURL=webpack:///./src/app.js?");
 
 /***/ }),
 
@@ -126,7 +126,7 @@ eval("const Request = function (url) {\n  this.url = url;\n}\n\nRequest.prototyp
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const Request = __webpack_require__(/*! ../helpers/request.js */ \"./src/helpers/request.js\");\nconst PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst Countries = function (url) {\n  this.url = url;\n  this.countries = [];\n};\n\n\n//# sourceURL=webpack:///./src/models/countries.js?");
+eval("const Request = __webpack_require__(/*! ../helpers/request.js */ \"./src/helpers/request.js\");\nconst PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst Countries = function (url) {\n  this.url = url;\n  this.countries = [];\n};\n\nCountries.prototype.getData = function () {\n  const request = new Request(this.url);\n  request.get(data => this.handleData(data));\n};\n\nCountries.prototype.bindEvents = function () {\n  PubSub.subscribe('SelectView:change', (evt) => {\n    selectedIndex = evt.detail;\n    const selectedCountry = this.countries[selectedIndex];\n    this.addBorderingCountries(selectedCountry);\n    PubSub.publish('Countries:selected-country-ready', selectedCountry);\n    console.log(selectedIndex);\n  });\n};\n\nCountries.prototype.handleData = function (data) {\n  this.countries = data;\n  PubSub.publish('Countries:countries-data-ready', this.countries);\n};\n\nCountries.prototype.addBorderingCountries = function (country) {\n  country.borderingCountries = this.getBorderingCountries(country);\n};\n\nCountries.prototype.getBorderingCountries = function (country) {\n  const borderingCountryCodes = this.borderingCountryCodes(country);\n  const borderingCountries = this.borderingCountries(borderingCountryCodes);\n  return borderingCountries;\n};\n\nCountries.prototype.borderingCountryCodes = function (country) {\n  return country.borders;\n};\n\nCountries.prototype.borderingCountries = function (borderingCountryCodes) {\n  const borderingCountries = borderingCountryCodes.map((countryCode) => {\n    return this.countryByCode(countryCode);\n  });\n  return borderingCountries;\n};\n\nCountries.prototype.countryByCode = function (code) {\n  return this.countries.find((country) => {\n    return country.alpha3Code === code;\n  });\n};\n\nmodule.exports = Countries;\n\n\n//# sourceURL=webpack:///./src/models/countries.js?");
 
 /***/ }),
 
@@ -135,9 +135,20 @@ eval("const Request = __webpack_require__(/*! ../helpers/request.js */ \"./src/h
   !*** ./src/views/country_view.js ***!
   \***********************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-eval("\n\n//# sourceURL=webpack:///./src/views/country_view.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst ListView = __webpack_require__(/*! ./list_view.js */ \"./src/views/list_view.js\");\n\nconst CountryView = function (container) {\n  this.container = container;\n};\n\n\nmodule.exports = CountryView;\n\n\n//# sourceURL=webpack:///./src/views/country_view.js?");
+
+/***/ }),
+
+/***/ "./src/views/list_view.js":
+/*!********************************!*\
+  !*** ./src/views/list_view.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst ListView = function (container) {\n  this.container = container;\n};\n\n\nmodule.exports = ListView;\n\n\n//# sourceURL=webpack:///./src/views/list_view.js?");
 
 /***/ }),
 
@@ -146,9 +157,9 @@ eval("\n\n//# sourceURL=webpack:///./src/views/country_view.js?");
   !*** ./src/views/select_view.js ***!
   \**********************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-eval("\n\n//# sourceURL=webpack:///./src/views/select_view.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst SelectView = function (selectElement) {\n  this.element = selectElement;\n};\n\n\nmodule.exports = SelectView;\n\n\n//# sourceURL=webpack:///./src/views/select_view.js?");
 
 /***/ })
 
