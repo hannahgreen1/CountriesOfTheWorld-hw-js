@@ -21,8 +21,12 @@ CountryView.prototype.render = function (country) {
   const countryRegion = this.createElement('p', country.region);
   this.container.appendChild(countryRegion);
 
+  const capitalTitle = this.createElement('h3', 'Capital City:');
+  this.container.appendChild(capitalTitle);
+
   const capitalCity = this.createElement('p', country.capital);
   this.container.appendChild(capitalCity);
+
 
   const countryLanguagesListView = new ListView(this.container);
   countryLanguagesListView.render('Languages', country.languages, 'name');
